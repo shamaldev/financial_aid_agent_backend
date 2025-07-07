@@ -1,0 +1,69 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python/
+env/
+venv/
+.venv/
+*/bin/
+*/include/
+*/lib/
+*/lib64/
+*.egg-info/
+.coverage
+.pytest_cache/
+htmlcov/
+.nox/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.python-version
+
+# Editor/IDE specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.bak
+
+# Environment variables
+.env
+.env.*
+!.env.example # Keep this if you want to provide an example .env file
+
+# Database files (if using local files like SQLite)
+*.sqlite3
+*.db
+*.db-*
+data/
+db.sqlite3
+
+# Logs and temporary files
+*.log
+logs/
+tmp/
+temp/
+
+# Uploaded files or generated assets (if your app handles uploads)
+/uploads/
+/media/
+
+# Build artifacts
+dist/
+build/
+*.egg
+*.whl
+
+# Operating System files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Dependency management (if not explicitly tracked)
+# Uncomment these if you prefer not to commit them
+# Pipfile.lock
+# poetry.lock

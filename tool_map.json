@@ -1,0 +1,12 @@
+{
+    "CalWORKs Stage One Child Care Eligibility": {
+        "collection_name": "CalWORKs_Stage_One_Child_Care_Eligibility",
+        "summary": "The CalWORKs Stage One Subsidized Child Care Program, established by AB 1542, provides child care benefits to eligible participants, with recent expansions by SB 80 increasing access for 12 months.",
+        "tool_name": "CalWORKs_Stage_One_Child_Care_Eligibility_filter_query_tool"
+    },
+    "Every Woman Counts (EWC) Program": {
+        "collection_name": "Every_Woman_Counts_EWC_Program",
+        "summary": "The California Department of Health Care Services' Every Woman Counts (EWC) Program offers free breast and cervical cancer screening services to uninsured women, including mammograms, clinical breast exams, Pap tests, and HPV tests with a Pap test.",
+        "tool_name": "Every_Woman_Counts_EWC_Program_filter_query_tool"
+    }
+}
