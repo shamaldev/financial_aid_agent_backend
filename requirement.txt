@@ -176,7 +176,6 @@ python-jose==3.5.0
 python-json-logger==3.3.0
 python-multipart==0.0.20
 pytz==2025.2
-pywin32==310
 pyxnat==1.6.3
 PyYAML==6.0.2
 rdflib==6.3.2
