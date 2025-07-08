@@ -81,13 +81,26 @@ all_tools = []
 def rag_tool(user_query: Annotated[str, "user query."], 
             categories: Annotated[List[Union[str, None]], "category of the query. should be 'info', 'criteria', 'example' or [None] as value "], 
             policy_name: Annotated[List[Union[str, None]], "Name of the policy whose context is required or None if no specific policy is required"],
-            top_k: Annotated[int, "top k context."], 
+            top_k: Annotated[int, "top k context."] = 8
             )-> Annotated[List[Union[str, None]], "Context relevant to user query"]:
     try:
         app_logger.log('Strated')
         app_logger.log("retriving tools Strated")
+
+        print("<<<<<<<<<<<<<<<<<<<<<<< RAG input")
+        print("user_query \n")
+        print(user_query)
+        print("categories \n")
+        print(categories)
+        print("policy_name \n")
+        print(policy_name)
+
         _initialize_retriever()
+
         retrieved_tools = _obj_retriever.retrieve(user_query)
+
+        print("###### retrived tools count: ", len(retrieved_tools) )
+        print(" ###### retrieved_tools: ", retrieved_tools )
         app_logger.log(" retriving tools Done")
 
         app_logger.log("retriving Nodes Strated")
@@ -95,19 +108,33 @@ def rag_tool(user_query: Annotated[str, "user query."],
         cleaned_texts = []
 
         all_retrieved_nodes =[]
+        print(" ###### retrieved nodes: \n")
+
         # Iterate through each retrieved tool
         for tool in retrieved_tools:
-            retrieved_node = tool.call(user_query, categories=categories, policy_name=policy_name) # ["criteria", None] 
+            retrieved_node = tool.call(user_query, categories=categories, policy_name=policy_name, top_k = top_k) # ["criteria", None] 
+            print(retrieved_node)
             all_retrieved_nodes.append(retrieved_node)
+
+        print(" ###### all_retrieved_nodes count: ", len(all_retrieved_nodes) )
+        print(" ###### all_retrieved_nodes: ", all_retrieved_nodes )
+
+        print(" ###### retrieved texts: \n")
 
         for node in all_retrieved_nodes:
             retrieved_text = node.content
+            print(retrieved_text)
             cleaned_texts = clean_retrieved_node_text(retrieved_text)
             all_cleaned_text.extend(cleaned_texts)
+
         all_cleaned_text = list(filter(lambda x: x != "", all_cleaned_text))
 
         app_logger.log("retriving Nodes Done")
         app_logger.log("Sucess")
+        print(">>>>>>>>>>>>>>>>>>>>>>> RAG output")
+        for e in all_cleaned_text:
+            print(e)
+            print("\n")
 
         return all_cleaned_text
     
