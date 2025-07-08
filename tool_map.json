@@ -1,12 +1,22 @@
 {
     "CalWORKs Stage One Child Care Eligibility": {
         "collection_name": "CalWORKs_Stage_One_Child_Care_Eligibility",
-        "summary": "The CalWORKs Stage One Subsidized Child Care Program, established by AB 1542, provides child care benefits to eligible participants, with recent expansions by SB 80 increasing access for 12 months.",
+        "summary": "CalWORKs Stage One Child Care provides subsidized care upon entering CalWORKs, with extended access under Senate Bill 80 since October 1, 2019.",
         "tool_name": "CalWORKs_Stage_One_Child_Care_Eligibility_filter_query_tool"
+    },
+    "Continuous Eligibility for Children (CEC)": {
+        "collection_name": "Continuous_Eligibility_for_Children_CEC",
+        "summary": "Continuous Eligibility for Children (CEC) ensures children under 19 maintain free Medi-Cal eligibility until annual redetermination or age 19, disregarding adverse financial changes.",
+        "tool_name": "Continuous_Eligibility_for_Children_CEC_filter_query_tool"
     },
     "Every Woman Counts (EWC) Program": {
         "collection_name": "Every_Woman_Counts_EWC_Program",
-        "summary": "The California Department of Health Care Services' Every Woman Counts (EWC) Program offers free breast and cervical cancer screening services to uninsured women, including mammograms, clinical breast exams, Pap tests, and HPV tests with a Pap test.",
+        "summary": "The California Department of Health Care Services' Every Woman Counts Program provides free breast and cervical cancer screening services to uninsured women.",
         "tool_name": "Every_Woman_Counts_EWC_Program_filter_query_tool"
+    },
+    "Programs of All-Inclusive Care for the Elderly (PACE)": {
+        "collection_name": "Programs_of_All-Inclusive_Care_for_the_Elderly_PACE",
+        "summary": "The PACE program provides comprehensive care to frail elderly individuals eligible for Medicare and Medicaid, enabling community living.",
+        "tool_name": "Programs_of_All-Inclusive_Care_for_the_Elderly_PACE_filter_query_tool"
     }
 }

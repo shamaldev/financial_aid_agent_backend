@@ -14,6 +14,7 @@ from sqlalchemy.orm import Session
 import os, hashlib, logging
 from typing import List
 from fastapi.responses import FileResponse
+from tools.llamaindex.rag_tool_creator import create_index_from_policy
 from utils.log_utils.logger_instances import app_logger
 
 agent = ChatbotAgents()
@@ -136,7 +137,6 @@ def get_policy_file(policy_id: int, db: Session = Depends(get_db)):
     return FileResponse(p.file_path,
                         media_type="application/pdf",
                         filename=p.name)
-
 
 
 

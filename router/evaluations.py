@@ -46,9 +46,7 @@ async def upload_application(
         # extract data
         temp_path = save_temp(file)
         data, doc_name = extract_application_data(temp_path)
-        context = rag_tool(
-            "Retrieve eligibility criteria sections", categories="criteria", policy_name=doc_name
-        )
+        context = rag_tool(f" Retrieve eligibility criteria sections for {doc_name}", categories="criteria", policy_name=doc_name)
         state = {
             "application": json.dumps(data),
             "policy_context": context,
@@ -108,7 +106,7 @@ async def upload_application(
             .first()
         )
         context = rag_tool(
-            "Retrieve eligibility criteria sections",
+            f" Retrieve eligibility criteria sections for {session.doc_name}",
             categories="criteria", policy_name=session.doc_name
         )
         state = {
@@ -123,12 +121,15 @@ async def upload_application(
         }
         result = await workflow.invoke(state)
 
+        print("Result", result)
+
         # Handle feedback based on type
         if result["feedback_type"] == "revision":
+            print("<<<entered REvision>>>")
             rev_num = last_rev.revision_number + 1
             rev = models.EvaluationRevision(
                 session_id=evaluation_id,
-                report=result.get("report"),
+                report=result.get("criteria"),
                 feedback=feedback,
                 revision_number=rev_num
             )
@@ -141,7 +142,10 @@ async def upload_application(
                 status=result.get("status"),
                 query_response=None  # Added to match updated schema
             )
+            print("REvision ans",response)
         elif result["feedback_type"] == "query":
+            print("<<<entered user querying>>>")
+
             response = schemas.UploadResponse(
                 session_id=evaluation_id,
                 report=last_rev.report,  # Current report, unchanged
@@ -149,11 +153,13 @@ async def upload_application(
                 status=result.get("status"),
                 query_response=result.get("query_response")  # Added query response
             )
+            print("query ans",response)
         else:
             raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, "Invalid feedback type")
 
         session.last_updated = text('now()')
         db.commit()
+        print('Final ans',response)
         return response
 
     else:
@@ -204,8 +210,6 @@ def get_revisions(
             ) for r in revs
         ]
     )
-
-
 
 @router.get(
     "/{session_id}/download-latest",

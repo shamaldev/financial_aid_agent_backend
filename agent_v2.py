@@ -42,9 +42,11 @@ class LangGraphWorkflow:
             app_logger.log("Feedback revision complete, ending flow")
             return END
         if state.get("revision_count", 0) >= state.get("max_revisions", 3):
-            app_logger.log(f"Maximum revisions reached ({state.get('max_revisions')})")
-            # return END
-            return "FormatReport"
+            if state.get("status") != 'report_formatted':
+                app_logger.log(f"Maximum revisions reached ({state.get('max_revisions')})")
+                return "FormatReport"
+            elif state.get("status") == 'report_formatted':
+                return END
 
         status = state["status"]
         if status == "generated":
@@ -108,4 +110,3 @@ class LangGraphWorkflow:
 
 
     
-

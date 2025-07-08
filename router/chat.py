@@ -169,7 +169,10 @@ async def send_message(
     history_list = history_list[-3:]
 
     # Generate bot response with separate question and history
-    bot_resp = agent.generate_answer(current_question, history_list)
+    try:
+        bot_resp = agent.generate_answer(current_question, history_list)
+    except Exception as e:
+        raise e
 
     # ─── 5) Push & persist bot response ────────────────────────────
     await redis.rpush(cache_key, json.dumps({

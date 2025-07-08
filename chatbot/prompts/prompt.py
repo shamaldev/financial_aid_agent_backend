@@ -15,17 +15,19 @@ def check_policy_candidates():
     )
     human = HumanMessagePromptTemplate.from_template(
         """
-        ---
-        User Question:
-        {question}
+            ---
+            User Question:
+            {question}
 
-        Available Policies (name and summary):
-        {policy_details}
-        ---
-        Output (one line):
-        - A single policy name if one match,
-        - Multiple names separated by commas if ambiguous,
-        - Or 'Unknown' if none match.
+            Available Policies (name and summary):
+            {policy_details}
+            ---
+            Output (one line, **exactly** one of the following):
+            • A single policy name if one clear match
+            • Multiple names separated by commas if ambiguous
+            • Or 'Unknown' if none match
+
+            **Do not** include any list markers, hyphens, or bullets—just the policy name(s).
         """
     )
     return ChatPromptTemplate.from_messages([system, human])
@@ -78,7 +80,7 @@ def identify_intent_prompt():
             Given a prior Chat history and a new user query, determine if the new user query is a follow-up, a brand-new question, or a request to list all policies.
             Respond with a JSON object containing two fields:
             - "intent": "new" if it's a brand-new question, "follow" if it's a follow-up, or "list_policies" if it's a request to list all policies.
-            - "relevant_context": if it's a follow-up, provide the relevant context from the chat history as a string; otherwise, set to null.
+            - "relevant_context": if it's a follow-up, provide all the relevant context from the chat history as a string; otherwise, set to null.
             """
         )
     )

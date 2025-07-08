@@ -26,13 +26,21 @@ class ChatbotAgents:
         self.llm = ChatGroq(model_name=model, groq_api_key=api_key)
         # Load policy config
         self.file = load_json(json_file)
+        print(self.file,'file')
         # Lowercase policy names for comparison
         self.policy_names = list(self.file.keys())
       
         self.policy_names_lower = [name.lower() for name in self.policy_names]
 
+        print(self.policy_names,"policy_names")
+
     def chatbot_flow(self, query: str, history: list[str]) -> str:
+        print(">>>>>>>>>>>>>>>>>>>>>> policy chat started")
+
         candidates = self.identify_policies(query)
+
+        print(">>>>>>>>>>>>>>>>>>>>>> candidates identified")
+
         if not candidates:
             # No matches: ask user to choose from all policies
             return generate_clarification_message(all_policies=list(self.policy_names))
@@ -49,6 +57,8 @@ class ChatbotAgents:
             policy_name=policy_name,
             top_k = 5
         )
+        print(">>>>>>>>>>>>>>>>>>>>>> rag tool called")
+
 
         prompt = generate_bot_answer()
         formatted = prompt.format_messages(
@@ -57,6 +67,9 @@ class ChatbotAgents:
             policy_context=context
         )
         resp = self.llm.invoke(formatted).content.strip()
+        print(">>>>>>>>>>>>>>>>>>>>>> llm response generated")
+        print("<<<<<<<<<<<<<<<<<<<<<< policy chat ended")
+
         return resp
 
      
@@ -74,6 +87,13 @@ class ChatbotAgents:
         resp = self.llm.invoke(formatted).content.strip()
         # Expect comma-separated list or 'None'
         candidates = [p.strip() for p in resp.split(',') if p.strip().lower() != 'none']
+
+        print(">>>>>>>>>>> identify_policies <<<<<<<<<<<<")
+        print("candidates \n")
+        print(candidates)
+        print("policy_names \n")
+        print(self.policy_names)
+
         # Normalize to exact key names
         normalized = []
         for p in candidates:
@@ -101,6 +121,9 @@ class ChatbotAgents:
         intent_data = self.identify_intent(user_question, history)
         intent = intent_data.get("intent")
         relevant_context = intent_data.get("relevant_context")
+
+        print("<<<<<<<<<<Intent Recognition started>>>>>>>>")
+        print(intent_data)
 
         if intent == "new":
             response = self.chatbot_flow(user_question,history)

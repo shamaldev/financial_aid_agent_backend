@@ -105,8 +105,8 @@ def revise_report_prompt():
     system = SystemMessage(
         content=(
             "You are an Expert Policy Report Reviser."
-            "Improve the `Original Report` to correct parts of the report as per the `Feedback` provided. "
-            "Do not include markdown code fences or any additional commentary—output."
+            "Improve the `Original Report` to correct parts of the report or improve the report as per the `Feedback` provided. "
+            "Do not include markdown code fences, application details or any additional commentary in the output."
             "Return the complete improved report in the original structure and format."
         )
     )
@@ -232,7 +232,7 @@ def report_formatter_prompt():
         ## Detailed Criteria Analysis  
         For each criterion in `refined_results`, include:
         - **Criterion:** [criterion title]  
-          **Verdict:** [Likely Eligible / Likely Ineligible / Further Review Needed]  
+          **Verdict:** [Eligible /Ineligible / Further Review Needed]  
           **Justification:** [two or three sentences, citing only the inputs]  
         
         ## Overall Recommendation  
@@ -381,5 +381,4 @@ def generate_policy_logic_prompt(criterion_list:list[str], policy:str) -> str:
     """
 
     return prompt
-
 
