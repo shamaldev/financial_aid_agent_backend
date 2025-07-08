@@ -1,12 +1,11 @@
 version: "3.9"
-
 services:
   redis:
     image: redis:7
     container_name: redis
     ports:
       - "6379:6379"
-
+ 
   fastapi:
     build:
       context: .
@@ -18,3 +17,11 @@ services:
       - ./.env
     depends_on:
       - redis
+ 
+    volumes:
+      # Persist Chroma’s DB directory on your host into /app/chroma_db
+      - ./chroma_db:/app/chroma_db
+      # Persist Llama-Index storage into /app/storage
+      - ./storage:/app/storage
+      # Persist your tool_map.json into the container root at /app/tool_map.json
+      - ./tool_map.json:/app/tool_map.json
