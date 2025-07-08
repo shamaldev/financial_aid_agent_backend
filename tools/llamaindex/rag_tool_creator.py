@@ -71,7 +71,8 @@ def create_rag_function_tool(index, policy_name, tool_name, summary):
         app_logger.log("Started")
 
         def filtered_vector_query(query: str, categories: str = None,  policy_name:str = None, top_k = 8) -> str:
-
+            try:
+                print("<<<<<<<<<<<<<<<<<< filtered_vector_query started")
                 # Construct metadata filters
                 metadata_dicts = []
                 if categories:
@@ -96,8 +97,24 @@ def create_rag_function_tool(index, policy_name, tool_name, summary):
                         condition=condition # FilterCondition.AND
                     )
                 )
+
+                print("query: ")
+                print(query)
+
                 response = query_engine.query(query)
+
+                print("filtered_vector_query response: ")
+                print(response)
+                
+                print(">>>>>>>>>>>>>>>> filtered_vector_query ended")
+
+
                 return response
+            except Exception as e:
+                raise e
+            
+            
+
             
         filtered_vector_query.__doc__ = (
             f"""Use to answer questions over {policy_name}.
